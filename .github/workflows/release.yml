@@ -30,7 +30,11 @@ jobs:
             awk '/^## \[.*\]/ {if (p) exit; p=1} p' CHANGELOG.md > release_notes.txt
             # 移除第一行标题（因为标题会在 Release 中自动显示）
             tail -n +2 release_notes.txt > release_notes_clean.txt
-            echo "notes=$(cat release_notes_clean.txt)" >> $GITHUB_OUTPUT
+            {
+              echo "notes<<EOF"
+              cat release_notes_clean.txt
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
           else
             echo "notes=Release ${{ steps.extract_version.outputs.version }}" >> $GITHUB_OUTPUT
           fi
