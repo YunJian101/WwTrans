@@ -22,7 +22,7 @@ docker run -d \
     --name WwTrans \
     --restart=always \
     -p 80:80 \
-    ghcr.io/YunJian101/wwtrans:latest
+    ghcr.io/yunjian101/wwtrans:latest
 ```
 
 ### Docker Compose
@@ -35,7 +35,7 @@ services:
         restart: always
         ports:
             - '80:80'
-        image: 'ghcr.io/YunJian101/wwtrans:latest'
+        image: 'ghcr.io/yunjian101/wwtrans:latest'
 ```
 
 ## 访问服务
