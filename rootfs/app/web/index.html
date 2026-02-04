@@ -1,14 +1,325 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>微信代理</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WwTrans 搭建成功</title>
+  <!-- 引入图标库（勾号/企微相关图标） -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+    }
+    /* 页面整体布局，居中+渐变背景 */
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    /* 核心卡片容器，圆角+阴影+白色背景 */
+    .success-card {
+      background: #fff;
+      padding: 48px 32px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    /* 成功图标样式，绿色+放大动效 */
+    .success-icon {
+      font-size: 64px;
+      color: #198754;
+      margin-bottom: 24px;
+      animation: bounce 0.8s ease;
+    }
+    /* 主标题 */
+    .success-title {
+      font-size: 28px;
+      color: #212529;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    /* 项目名标识，突出显示 */
+    .project-name {
+      color: #0d6efd;
+      font-weight: 700;
+    }
+    /* 描述文本 */
+    .success-desc {
+      font-size: 16px;
+      color: #6c757d;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    /* 功能列表 */
+    .feature-list {
+      text-align: left;
+      margin: 0 auto 32px;
+      max-width: 380px;
+      color: #495057;
+    }
+    .feature-list li {
+      list-style: none;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    .feature-list li i {
+      color: #0d6efd;
+      margin-right: 8px;
+      font-size: 14px;
+    }
+    /* 底部提示文本 */
+    .tips {
+      font-size: 14px;
+      color: #6c757d;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+    /* 公网地址显示区域 */
+    .public-ip-section {
+      margin-top: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-radius: 8px;
+      border-left: 4px solid #0d6efd;
+    }
+    /* IP变化提示消息 */
+    .ip-status-msg {
+      font-size: 12px;
+      margin-top: 8px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      animation: slideDown 0.3s ease-out;
+      display: inline-block;
+    }
+    .ip-status-msg.changed {
+      background: #d1e7dd;
+      color: #0f5132;
+      border: 1px solid #badbcc;
+    }
+    .ip-status-msg.unchanged {
+      background: #e2e3e5;
+      color: #41464b;
+      border: 1px solid #ced4da;
+    }
+    .ip-status-msg.time {
+      background: #f8f9fa;
+      color: #6c757d;
+      border: 1px solid #dee2e6;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .public-ip-label {
+      font-size: 13px;
+      color: #495057;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .public-ip-value {
+      font-size: 18px;
+      color: #0d6efd;
+      font-weight: 700;
+      word-break: break-all;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .public-ip-value:hover {
+      color: #0b5ed7;
+    }
+    .public-ip-value.copied {
+      color: #198754;
+    }
+    /* 加载动画 */
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #0d6efd;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    /* 淡入动画 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* 图标弹跳动画 */
+    @keyframes bounce {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    /* 响应式，小屏幕适配 */
+    @media (max-width: 480px) {
+      .success-card {
+        padding: 32px 20px;
+      }
+      .success-title {
+        font-size: 24px;
+      }
+      .success-icon {
+        font-size: 56px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <h1>微信代理搭建成功！</h1>
+  <div class="success-card">
+    <!-- 成功勾号图标 -->
+    <i class="fas fa-check-circle success-icon"></i>
+    <!-- 主标题，替换成你最终选定的项目名即可 -->
+    <h1 class="success-title">
+      <span class="project-name">WwTrans</span> 搭建成功！
+    </h1>
+    <!-- 描述文本 -->
+    <p class="success-desc">企微消息转发Docker服务已正常启动，可开始进行消息转发配置与使用</p>
+    <!-- 核心功能提示 -->
+    <ul class="feature-list">
+      <li><i class="fas fa-angle-right"></i> 企微消息实时捕获与转发</li>
+    </ul>
+    <!-- 公网地址显示 -->
+    <div class="public-ip-section">
+      <p class="public-ip-label"><i class="fas fa-server"></i> 服务器公网地址：</p>
+      <p class="public-ip-value" id="public-ip" onclick="copyIP()">
+        <span id="ip-text">正在获取...</span>
+        <span id="loading-spinner" class="loading"></span>
+      </p>
+      <div id="ip-status-msg"></div>
+    </div>
+    <!-- 底部小提示 -->
+    <p class="tips">© 2025 WwTrans 企微消息转发服务 | Docker 部署版</p>
+  </div>
+  <script>
+    // 获取并显示服务器公网地址
+    async function fetchServerPublicIP() {
+      try {
+        // 从服务器 API 获取公网 IP
+        const response = await fetch('/api/public-ip');
+        const responseData = await response.text();
 
+        if (responseData && !responseData.includes('获取失败')) {
+          // 解析返回数据（格式：IP|时间戳）
+          const [ip, timestamp] = responseData.split('|');
+          const currentIP = ip || responseData;
 
+          // 显示IP地址
+          document.getElementById('ip-text').textContent = currentIP;
+
+          // 显示更新时间
+          if (timestamp) {
+            showUpdateTime(timestamp);
+          }
+        } else {
+          document.getElementById('ip-text').textContent = '获取失败';
+        }
+      } catch (error) {
+        document.getElementById('ip-text').textContent = '获取失败';
+      } finally {
+        document.getElementById('loading-spinner').style.display = 'none';
+      }
+    }
+
+    // 显示更新时间
+    function showUpdateTime(timestamp) {
+      const statusMsg = document.getElementById('ip-status-msg');
+      statusMsg.className = 'ip-status-msg time';
+
+      // 将时间戳转换为日期时间格式
+      const date = new Date(timestamp * 1000);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+
+      const timeStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      statusMsg.innerHTML = `<i class="fas fa-clock"></i> 更新于 ${timeStr}`;
+    }
+
+    // 显示IP状态提示
+    function showIPStatus(status) {
+      const statusMsg = document.getElementById('ip-status-msg');
+
+      // 去除可能的空白字符
+      const cleanStatus = status ? status.trim() : '';
+
+      statusMsg.className = 'ip-status-msg';
+
+      if (cleanStatus === 'changed') {
+        statusMsg.classList.add('changed');
+        statusMsg.innerHTML = '<i class="fas fa-info-circle"></i> 公网地址已更新';
+      } else if (cleanStatus === 'unchanged') {
+        statusMsg.classList.add('unchanged');
+        statusMsg.innerHTML = '<i class="fas fa-check"></i> 公网地址未变化';
+      } else {
+        statusMsg.innerHTML = '';
+      }
+    }
+
+    // 复制 IP 地址到剪贴板
+    function copyIP() {
+      const ipElement = document.getElementById('ip-text');
+      const ipText = ipElement.textContent;
+
+      navigator.clipboard.writeText(ipText).then(() => {
+        const ipValue = document.getElementById('public-ip');
+        ipValue.classList.add('copied');
+        const originalText = ipText;
+        ipElement.textContent = '已复制！';
+
+        setTimeout(() => {
+          ipElement.textContent = originalText;
+          ipValue.classList.remove('copied');
+        }, 1500);
+      }).catch(err => {
+        // 降级处理
+        const textArea = document.createElement('textarea');
+        textArea.value = ipText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+
+        const ipValue = document.getElementById('public-ip');
+        ipValue.classList.add('copied');
+        const originalText = ipText;
+        ipElement.textContent = '已复制！';
+
+        setTimeout(() => {
+          ipElement.textContent = originalText;
+          ipValue.classList.remove('copied');
+        }, 1500);
+      });
+    }
+
+    // 页面加载时获取 IP
+    window.addEventListener('load', fetchServerPublicIP);
+  </script>
 </body>
-
 </html>
