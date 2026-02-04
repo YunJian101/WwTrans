@@ -1,4 +1,4 @@
-FROM docker.1ms.run/alpine:3.23
+FROM alpine:3.23
 
 ENV TZ=Asia/Shanghai
 
