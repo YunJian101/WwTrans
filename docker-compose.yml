@@ -1,12 +1,12 @@
-version: '3.8'
-
 services:
   Wwtrans:
     build:
       context: .
       dockerfile: Dockerfile
-    image: alioth1/wwtrans
+    image: ghcr.io/yunjian101/wwtrans
     container_name: WwTrans
     restart: always
     ports:
       - '80:80'
+    environment:
+      - SHOW_PUBLIC_IP=false

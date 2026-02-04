@@ -12,6 +12,7 @@ WwTrans 是一个基于 Docker 的企业微信消息转发代理服务，提供�
 - 💾 IP 变化时自动保存，未变化时不写入
 - 🎨 现代化 Web 界面，响应式设计
 - 📱 支持 PC 和移动端访问
+- 🔒 支持隐藏公网地址显示（通过环境变量控制）
 
 ## 快速开始
 
@@ -36,16 +37,33 @@ services:
         ports:
             - '80:80'
         image: 'ghcr.io/yunjian101/wwtrans:latest'
+        environment:
+            - SHOW_PUBLIC_IP=true  # true: 显示公网IP（默认）, false: 隐藏公网IP
 ```
+
+## 环境变量
+
+| 变量名 | 默认值 | 说明 |
+|--------|--------|------|
+| `SHOW_PUBLIC_IP` | `true` | 是否在页面显示服务器公网地址。设置为 `false` 时隐藏该区域。 |
 
 ## 访问服务
 
 部署完成后，访问 `http://服务器IP` 即可查看服务状态页面。
 
 页面会显示：
-- 当前服务器公网 IP 地址
+- 当前服务器公网 IP 地址（当 `SHOW_PUBLIC_IP=true` 时）
 - 公网地址最近一次更新的时间
 - 点击 IP 地址可复制到剪贴板
+
+### 隐藏公网地址显示
+
+如果需要在页面上隐藏公网地址显示，将环境变量设置为 `false`：
+
+```yaml
+environment:
+    - SHOW_PUBLIC_IP=false
+```
 
 ## 支持平台
 

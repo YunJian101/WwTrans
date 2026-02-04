@@ -93,6 +93,7 @@
       background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
       border-radius: 8px;
       border-left: 4px solid #0d6efd;
+      display: none;
     }
     /* IP变化提示消息 */
     .ip-status-msg {
@@ -201,9 +202,10 @@
     <!-- 核心功能提示 -->
     <ul class="feature-list">
       <li><i class="fas fa-angle-right"></i> 企微消息实时捕获与转发</li>
+      <li><i class="fas fa-angle-right"></i> 实时显示服务器IP变更记录</li>
     </ul>
     <!-- 公网地址显示 -->
-    <div class="public-ip-section">
+    <div class="public-ip-section" style="display: none;">
       <p class="public-ip-label"><i class="fas fa-server"></i> 服务器公网地址：</p>
       <p class="public-ip-value" id="public-ip" onclick="copyIP()">
         <span id="ip-text">正在获取...</span>
@@ -221,6 +223,14 @@
         // 从服务器 API 获取公网 IP
         const response = await fetch('/api/public-ip');
         const responseData = await response.text();
+
+        // 检查是否禁用
+        if (responseData.includes('已禁用')) {
+          return;
+        }
+
+        // 显示公网地址区域
+        document.querySelector('.public-ip-section').style.display = 'block';
 
         if (responseData && !responseData.includes('获取失败')) {
           // 解析返回数据（格式：IP|时间戳）

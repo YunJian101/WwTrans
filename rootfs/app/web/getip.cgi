@@ -1,6 +1,16 @@
 #!/bin/sh
 # CGI脚本 - 动态获取服务器公网IP并返回更新时间
 
+# 检查环境变量是否显示公网IP，默认为显示
+SHOW_PUBLIC_IP="${SHOW_PUBLIC_IP:-true}"
+
+if [ "$SHOW_PUBLIC_IP" != "true" ]; then
+    echo "Content-Type: text/plain"
+    echo ""
+    echo "已禁用"
+    exit 0
+fi
+
 # 保存IP和时间的文件路径
 IP_CACHE_FILE="/tmp/public_ip_cache.txt"
 
