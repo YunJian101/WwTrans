@@ -9,4 +9,4 @@ services:
     ports:
       - '80:80'
     environment:
-      - SHOW_PUBLIC_IP=false
+      - SHOW_PUBLIC_IP=true
