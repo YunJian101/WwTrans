@@ -1,0 +1,46 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v6
+
+      -
+        name: Extract version from tag
+        id: extract_version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      -
+        name: Read CHANGELOG
+        id: changelog
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            # 提取最新版本的变更内容（两个 ## 标题之间的内容）
+            awk '/^## \[.*\]/ {if (p) exit; p=1} p' CHANGELOG.md > release_notes.txt
+            # 移除第一行标题（因为标题会在 Release 中自动显示）
+            tail -n +2 release_notes.txt > release_notes_clean.txt
+            echo "notes=$(cat release_notes_clean.txt)" >> $GITHUB_OUTPUT
+          else
+            echo "notes=Release ${{ steps.extract_version.outputs.version }}" >> $GITHUB_OUTPUT
+          fi
+
+      -
+        name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.changelog.outputs.notes }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
