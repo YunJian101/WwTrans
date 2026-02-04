@@ -23,7 +23,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: alioth1/wwtrans
+          images: ghcr.io/YunJian101/wwtrans
           tags: |
             type=raw,value=latest
 
@@ -34,13 +34,14 @@ jobs:
       -
         name: Set Up Buildx
         uses: docker/setup-buildx-action@v3
-        
+
       -
-        name: Login DockerHub
+        name: Login to GHCR
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       -
         name: Build
