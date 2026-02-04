@@ -287,7 +287,17 @@
       const ipElement = document.getElementById('ip-text');
       const ipText = ipElement.textContent;
 
-      navigator.clipboard.writeText(ipText).then(() => {
+      // 使用降级方法，兼容性更好
+      const textArea = document.createElement('textarea');
+      textArea.value = ipText;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+
+      if (successful) {
         const ipValue = document.getElementById('public-ip');
         ipValue.classList.add('copied');
         const originalText = ipText;
@@ -297,25 +307,7 @@
           ipElement.textContent = originalText;
           ipValue.classList.remove('copied');
         }, 1500);
-      }).catch(err => {
-        // 降级处理
-        const textArea = document.createElement('textarea');
-        textArea.value = ipText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-
-        const ipValue = document.getElementById('public-ip');
-        ipValue.classList.add('copied');
-        const originalText = ipText;
-        ipElement.textContent = '已复制！';
-
-        setTimeout(() => {
-          ipElement.textContent = originalText;
-          ipValue.classList.remove('copied');
-        }, 1500);
-      });
+      }
     }
 
     // 页面加载时获取 IP

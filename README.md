@@ -69,6 +69,10 @@ Docker 镜像支持以下架构：
 
 本项目遵循开源许可证，详见 [LICENSE](LICENSE) 文件。
 
+## 致谢
+
+感谢原项目 [wxchat-Docker](https://github.com/DDSRem-Dev/wxchat-Docker) 提供的技术基础和灵感。
+
 ---
 
 © 2025 WwTrans 企微消息转发服务 | Docker 部署版
